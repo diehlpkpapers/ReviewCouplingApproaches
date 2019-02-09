@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 E=1
 h=0.1
 delta=2*0.1
-V=0.1*0.1
+V=h*h
 A=1
 F=0.1
 #define the material constant for the finte element discretization
@@ -26,7 +26,7 @@ MCoupled = np.array(
   [  0  , -a , 2*a , -a , 0 , 0 , 0, 0 , 0 , 0 , 0  ],
   [      0 , b/4 , -b , 2.5*b , -b , b/4 , 0 , 0 , 0 , 0 , 0 ],
   [       0 , 0 ,  b/4 , -b , 2.5*b ,  -b , b/4 , 0 , 0 , 0 , 0 ],
-  [     0 , 0 , 0 ,  b/4 , -b , 2.5*b , -b , b/4 , 0 , 0 , 0 ],
+  [     0 , 0 , 0 ,  b/4 , -b , 0 , -b , b/4 , 0 , 0 , 0 ],
   [      0 , 0 , 0 , 0 , b/4 , -b , 2.5*b , -b , b/4 , 0 , 0 ],
   [      0 , 0 , 0 , 0 , 0 , b/4 , -b , 2.5*b , -b , b/4 , 0 ],
   [      0 , 0 , 0 , 0 , 0 , 0 , 0 , -a , 2*a , -a , 0 ],
@@ -42,7 +42,7 @@ MFem = np.array(
   [  0  , -a , 2*a , -a , 0 , 0 , 0, 0 , 0 , 0 , 0  ],
   [      0 , 0 , -a , 2*a , -a , 0 , 0 , 0 , 0 , 0 , 0 ],
   [       0 , 0 ,  0 , -a , 2*a ,  -a , 0 , 0 , 0 , 0 , 0 ],
-  [     0 , 0 , 0 ,  0 , -a , 2*a , -a , 0 , 0 , 0 , 0 ],
+  [     0 , 0 , 0 ,  0 , -a , 0 , -a , 0 , 0 , 0 , 0 ],
   [      0 , 0 , 0 , 0 , 0 , -a , 2*a , -a , 0 , 0 , 0 ],
   [      0 , 0 , 0 , 0 , 0 , 0 , -a , 2*a , -a ,0 , 0 ],
   [      0 , 0 , 0 , 0 , 0 , 0 , 0 , -a , 2*a , -a , 0 ],
@@ -50,6 +50,19 @@ MFem = np.array(
   [     0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , -a , a ]])
 
 # peridyanmic
+
+MPeridynamics = np.array(
+ [ [2.5*b , -b , b/4 , 0 , 0, 0 , 0 , 0 , 0 , 0 , 0  ],
+  [  -b , 2.5*b , -b , b/4 , 0 , 0, 0 , 0 , 0 , 0 , 0 ],
+  [  b/4  , -b , 2.5*b , -b , b/4 , 0 , 0, 0 , 0 , 0 , 0  ],
+  [      0 , b/4 , -b , 2.5*b , -b , b/4 , 0 , 0 , 0 , 0 , 0 ],
+  [       0 , 0 ,  b/4 , -b , 2.5*b ,  -b , b/4 , 0 , 0 , 0 , 0 ],
+  [     0 , 0 , 0 ,  b/4 , -b , 0 , -b , b/4 , 0 , 0 , 0 ],
+  [      0 , 0 , 0 , 0 , b/4 , -b , 2.5*b , -b , b/4 , 0 , 0 ],
+  [      0 , 0 , 0 , 0 , 0 , b/4 , -b , 2.5*b , -b , b/4 , 0 ],
+  [      0 , 0 , 0 , 0 , 0 , 0 , b/4 , -b , 2.5*b , -b , b/4 ],
+  [     0 , 0 , 0 , 0 , 0 , 0 , 0 , b/4  , -b , 2.5*b , -b ],
+  [     0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , b/4 , -b , 2.5*b ]])
 
  
 
@@ -66,9 +79,11 @@ x= np.arange(0,h*11,0.1)
 ucoupled = np.linalg.solve(MCoupled,f)
 
 #solve fem approach
-ufem = ucoupled = np.linalg.solve(MFem,f)
+ufem  = np.linalg.solve(MFem,f)
 
-print ucoupled
+#solve pd approach
+upd  = np.linalg.solve(MPeridynamics,f)
+
 
 plt.plot(x,ucoupled,label="Coupled")
 plt.plot(x,ufem,label="FEM")
@@ -76,4 +91,6 @@ plt.legend()
 plt.grid()
 plt.xlabel("Node position")
 plt.ylabel("Displacement")
-plt.show()
+plt.savefig("plot_two.pdf")
+plt.plot(x,upd,label="PD")
+plt.savefig("plot_all.pdf")
