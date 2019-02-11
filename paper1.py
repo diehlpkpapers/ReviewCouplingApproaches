@@ -1,10 +1,14 @@
 # Implementation of the examle problem for 
 # M. Zaccariotto, T. Mudric, D. Tomasi, A. Shojaei, U. Galvanetto, Coupling of fem meshes with peri-
-# dynamic grids, Computer Methods in Applied Mechanics and Engineering 330 (2018) 471–497.
+# dynamic grids, Computer Methods in Applied Mechanics and Engineering 330 (2018) 471-497.
 #@author patrickdiehl@lsu.edu
 #@date 02/09/2019
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import rc
+rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
+rc('text', usetex=True)
+plt.rcParams.update({'font.size': 15})
 
 #define properties
 E=1
@@ -88,12 +92,11 @@ ufem  = np.linalg.solve(MFem,f)
 upd  = np.linalg.solve(MPeridynamics,f)
 
 # plot the results
-plt.plot(x,ucoupled,label="Coupled")
-plt.plot(x,ufem,label="FEM")
+plt.plot(x,ucoupled,label="Coupled",lw=2)
+plt.plot(x,ufem,label="FEM",lw=2)
+plt.plot(x,upd,label="PD",lw=2)
 plt.legend()
 plt.grid()
 plt.xlabel("Node position")
 plt.ylabel("Displacement")
-plt.savefig("plot_two.pdf")
-plt.plot(x,upd,label="PD")
 plt.savefig("plot_all.pdf")
