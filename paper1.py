@@ -16,7 +16,7 @@ Area=1
 F=1.0
 
 #define the material constant for the finte element discretization
-h=0.1
+h=0.2409090909090909
 a=E*Area/h
 
 #define the material constant for the peridyanmic discretization 
@@ -72,7 +72,6 @@ MPeridynamics = np.array(
   [   0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , -b , b ]])
 
  
-
 # generate the left-hand side
 lenF = np.shape(MFem)[0]
 f = np.zeros(lenF)

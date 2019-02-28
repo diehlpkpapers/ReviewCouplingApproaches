@@ -12,15 +12,59 @@ rc('text', usetex=True)
 plt.rcParams.update({'font.size': 15})
 plt.rcParams.update({'figure.autolayout': True})
 
-x = []
-u = []
+#define properties
+E=200e9
+Area=1e-4
+F=1.0
+
+#define the material constant for the finte element discretization
+h=0.36
+a=E*Area/h
+
+# Pure finite element approach
+
+MFem = np.array(
+ [ [1 , 0 , 0 , 0 , 0, 0 , 0 , 0 , 0 , 0 , 0  ],
+  [  -a , 2*a , -a , 0 , 0 , 0, 0 , 0 , 0 , 0 , 0 ],
+  [   0 , -a , 2*a , -a , 0 , 0 , 0, 0 , 0 , 0 , 0  ],
+  [   0 , 0 , -a , 2*a , -a , 0 , 0 , 0 , 0 , 0 , 0 ],
+  [   0 , 0 ,  0 , -a , 2*a , -a , 0 , 0 , 0 , 0 , 0 ],
+  [   0 , 0 , 0 ,  0 , -a , 2*a , -a , 0 , 0 , 0 , 0 ],
+  [   0 , 0 , 0 , 0 , 0 , -a , 2*a , -a , 0 , 0 , 0 ],
+  [   0 , 0 , 0 , 0 , 0 , 0 , -a , 2*a , -a ,0 , 0 ],
+  [   0 , 0 , 0 , 0 , 0 , 0 , 0 , -a , 2*a , -a , 0 ],
+  [   0 , 0 , 0 , 0 , 0 , 0 , 0 , 0  , -a , 2*a , -a ],
+  [   0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , -a , a ]])
+
+# generate the left-hand side
+lenF = np.shape(MFem)[0]
+f = np.zeros(lenF)
+f[len(f)-1]=F
+
+# generate the position in the bar
+xFEM  = np.arange(-0.6,h*9,h)
+#xFEM += 0.35
+
+# solve fem approach
+uFEM  = np.linalg.solve(MFem,f)
+
+print uFEM
+
+
+xCoupled = []
+uCoupled = []
 with open('paper5.csv') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     for row in csv_reader:
-       x.append(float(row[0]))
-       u.append(float(row[1]))
+       xCoupled.append(float(row[0]))
+       uCoupled.append(float(row[1]))
+       
+       
+print uCoupled
 
-plt.plot(x,u,label="Coupling approach",lw=2)
+
+plt.plot(xCoupled,uCoupled,label="Coupling approach",lw=2)
+plt.plot(xFEM,uFEM,label="FEM",lw=2)
 plt.grid()
 plt.xlabel("Node position")
 plt.ylabel("Displacement")
