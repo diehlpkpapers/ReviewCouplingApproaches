@@ -24,12 +24,12 @@ a=E*Area/h
 # Pure finite element approach
 
 MFem = np.array(
- [ [1 , 0 , 0 , 0 , 0, 0 , 0 , 0 , 0 , 0 , 0  ],
+ [ [a , -a , 0 , 0 , 0, 0 , 0 , 0 , 0 , 0 , 0  ],
   [  -a , 2*a , -a , 0 , 0 , 0, 0 , 0 , 0 , 0 , 0 ],
   [   0 , -a , 2*a , -a , 0 , 0 , 0, 0 , 0 , 0 , 0  ],
   [   0 , 0 , -a , 2*a , -a , 0 , 0 , 0 , 0 , 0 , 0 ],
   [   0 , 0 ,  0 , -a , 2*a , -a , 0 , 0 , 0 , 0 , 0 ],
-  [   0 , 0 , 0 ,  0 , -a , 2*a , -a , 0 , 0 , 0 , 0 ],
+  [   0 , 0 , 0 ,  0 , -a , 0 , -a , 0 , 0 , 0 , 0 ],
   [   0 , 0 , 0 , 0 , 0 , -a , 2*a , -a , 0 , 0 , 0 ],
   [   0 , 0 , 0 , 0 , 0 , 0 , -a , 2*a , -a ,0 , 0 ],
   [   0 , 0 , 0 , 0 , 0 , 0 , 0 , -a , 2*a , -a , 0 ],
@@ -39,17 +39,16 @@ MFem = np.array(
 # generate the left-hand side
 lenF = np.shape(MFem)[0]
 f = np.zeros(lenF)
+f[0]=-F
 f[len(f)-1]=F
 
 # generate the position in the bar
 xFEM  = np.arange(-0.6,h*9,h)
-#xFEM += 0.35
 
 # solve fem approach
 uFEM  = np.linalg.solve(MFem,f)
 
 print uFEM
-
 
 xCoupled = []
 uCoupled = []
@@ -60,9 +59,6 @@ with open('paper5.csv') as csv_file:
        uCoupled.append(float(row[1]))
        
        
-print uCoupled
-
-
 plt.plot(xCoupled,uCoupled,label="Coupling approach",lw=2)
 plt.plot(xFEM,uFEM,label="FEM",lw=2)
 plt.grid()
