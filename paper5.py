@@ -21,6 +21,14 @@ F=1.0
 h=0.36
 a=E*Area/h
 
+
+#define the material constant for the peridyanmic discretization 
+hPD=0.36
+delta=2.*hPD
+V=hPD*Area
+c=(2.*E)/(Area*delta*delta)
+b=c/h*V*V
+
 # Pure finite element approach
 
 MFem = np.array(
@@ -35,7 +43,36 @@ MFem = np.array(
   [   0 , 0 , 0 , 0 , 0 , 0 , 0 , -a , 2*a , -a , 0 ],
   [   0 , 0 , 0 , 0 , 0 , 0 , 0 , 0  , -a , 2*a , -a ],
   [   0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , -a , a ]])
+ 
+# Pure PD approach
+pdNodes = 11
 
+MPD = np.zeros([pdNodes,pdNodes])
+
+for i in range(0,pdNodes):
+    if i == 0:
+        MPD[i][0] = b
+        MPD[i][1] = -b
+    elif i == 1:
+        MPD[i][i-1] = -b
+        MPD[i][i] = 2.*b
+        MPD[i][i+1] = -b
+    elif i == pdNodes - 2:
+        MPD[i][i-1] = -b
+        MPD[i][i] = 2.*b
+        MPD[i][i+1] = -b
+    elif i == pdNodes - 1:
+        MPD[i][i] = b
+        MPD[i][i-1] = -b
+    else:
+        MPD[i][i-2] = -b/4.
+        MPD[i][i-1] = -b
+        MPD[i][i] = 2.5*b
+        MPD[i][i+1] = -b
+        MPD[i][i+2] = -b/4.
+        
+MPD[5][5] = 0
+        
 # generate the left-hand side
 lenF = np.shape(MFem)[0]
 f = np.zeros(lenF)
@@ -48,7 +85,19 @@ xFEM  = np.arange(-0.6,h*9,h)
 # solve fem approach
 uFEM  = np.linalg.solve(MFem,f)
 
-print uFEM
+# generate the left-hand side for PD
+lenFPD = np.shape(MPD)[0]
+fPD = np.zeros(lenFPD)
+fPD[0]=-F 
+fPD[len(fPD)-1]=F
+
+
+# solve fem approach
+uPD  = np.linalg.solve(MPD,fPD)
+
+
+# generate the position in the bar
+xPD  = np.arange(-0.6,3.1,hPD)
 
 xCoupled = []
 uCoupled = []
@@ -58,9 +107,9 @@ with open('paper5.csv') as csv_file:
        xCoupled.append(float(row[0]))
        uCoupled.append(float(row[1]))
        
-       
 plt.plot(xCoupled,uCoupled,label="Coupling approach",lw=2)
 plt.plot(xFEM,uFEM,label="FEM",lw=2)
+plt.plot(xPD,uPD,label="PD",lw=2)
 plt.grid()
 plt.xlabel("Node position")
 plt.ylabel("Displacement")
