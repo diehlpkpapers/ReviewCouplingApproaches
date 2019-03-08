@@ -79,7 +79,7 @@ f[0]=0
 f[len(f)-1]=F
 
 # generate the position in the bar
-x= np.arange(0,h*11,0.1)
+x= np.arange(0,h*11,h)
 
 # solve coupled approach
 ucoupled = np.linalg.solve(MCoupled,f)
