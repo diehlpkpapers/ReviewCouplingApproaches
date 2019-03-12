@@ -5,7 +5,7 @@
 #@date 02/09/2019
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import rc
+from matplotlib import rc, cm
 rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 plt.rcParams.update({'font.size': 15})
@@ -99,3 +99,20 @@ plt.grid()
 plt.xlabel("Node position")
 plt.ylabel("Displacement")
 plt.savefig("plot_all.pdf")
+
+plt.cla()
+
+plt.imshow(MCoupled, cmap=cm.binary)
+plt.axis('off')
+plt.colorbar()
+plt.savefig("paper1_matrix_coupled.pdf")
+
+plt.cla()
+
+plt.imshow(MFem, cmap=cm.binary)
+plt.savefig("paper1_matrix_fem.pdf")
+
+plt.cla()
+
+plt.imshow(MPeridynamics, cmap=cm.binary)
+plt.savefig("paper1_matrix_pd.pdf")
