@@ -90,6 +90,9 @@ ufem  = np.linalg.solve(MFem,f)
 # solve pd approach
 upd  = np.linalg.solve(MPeridynamics,f)
 
+
+error = (ufem - upd) /2
+
 # plot the results
 plt.plot(x,ucoupled,label="Coupled",lw=2)
 plt.plot(x,ufem,label="FEM",lw=2)
@@ -98,7 +101,7 @@ plt.legend()
 plt.grid()
 plt.xlabel("Node position")
 plt.ylabel("Displacement")
-plt.savefig("plot_all.pdf")
+plt.savefig("paper1.pdf")
 
 plt.cla()
 
