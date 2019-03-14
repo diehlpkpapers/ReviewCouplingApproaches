@@ -51,8 +51,9 @@ print a,b,c
 
 #Define the neighborhoods
 m = np.array([
-    #[], #3
-    [5,6], #4
+    [], #2
+    [], #3
+    [2,3,5,6], #4
     [4,6,7], #5
     [4,5,7,8], #6
     [5,6,8,9], #7
@@ -60,8 +61,9 @@ m = np.array([
     [7,8,10,11], #9
     [8,9,11,12], #10
     [9,10,12], #11
-    [10,11], #12
-    #[], #14
+    [10,11,13,14], #12
+    [], #13
+    [], #14
     ]
     )
 
@@ -101,39 +103,30 @@ MCoupled[16][16] = a
 #add the pd interactions
 for i in range(0,len(m)):
     for j in range(0,len(m[i])):
-        idI = 4+i
+        idI = 2+i
         idJ = m[i][j]
         MCoupled[idI][idI] += b
         MCoupled[idI][idJ] += -b
         for k in range(0,len(m[i])):
             MCoupled[idI][idI] += c
-            #MCoupled[idI][m[i][k]] += -c
+            MCoupled[idI][m[i][k]] += -c
         #print idJ-4
-        for l in range(0,len(m[idJ-4])):
+        for l in range(0,len(m[idJ-2])):
             MCoupled[idI][idJ] += -c
-            MCoupled[idI][m[idJ-4][l]] += c
+            MCoupled[idI][m[idJ-2][l]] += c
 
-
-
-
+#plot the stiffness matrix
 plt.imshow(MCoupled, cmap=cm.binary)
 plt.axis('off')
 plt.colorbar()
-#plt.savefig("paper4_matrix_coupled.pdf")
-plt.show()
+plt.savefig("paper4_matrix_coupled.pdf")
 plt.clf()
 
 
 #set boundary conditions
-#MCoupled[0][0] = 1
-#MCoupled[0][1] = 0
-#MCoupled[8,:] = 0
-
-
 MCoupled[8][8] = 0 
-#print MCoupled
 
-# generate the left-hand side
+# generate the left-hand side for the coupling approach
 lenM = np.shape(MCoupled)[0]
 f = np.zeros(lenM)
 f[0]=-F
@@ -145,13 +138,11 @@ ucoupled = np.linalg.solve(MCoupled,f)
 # generate the position in the bar
 xCoupled= np.arange(0,h*17,h)
 
-print max(xCoupled)
 
+# Prepare the stiffness matrix for the pure fem approach
 
 hFem = 0.16
 a = E*Area/hFem
-
-#solve the pure fem matrix 
 
 MFem = np.array(
  [ [a , -a , 0 , 0 , 0, 0 , 0 , 0 , 0 , 0 , 0  ],
@@ -176,11 +167,8 @@ f[len(f)-1]=F
 # solve fem approach
 ufem  = np.linalg.solve(MFem,f) 
  
-
 # generate the position in the bar
 xFem= np.arange(0,11*hFem,hFem)
-
-print max(xFem)
 
 # plot the results
 plt.plot(xCoupled,ucoupled,label="Coupled",lw=2)
@@ -191,6 +179,3 @@ plt.grid()
 plt.xlabel("Node position")
 plt.ylabel("Displacement")
 plt.savefig("paper4.pdf")
-
-
-print ucoupled
