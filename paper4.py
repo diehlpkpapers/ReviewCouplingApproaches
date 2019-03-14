@@ -1,6 +1,7 @@
 # Implementation of the examle problem for 
-# M. Zaccariotto, T. Mudric, D. Tomasi, A. Shojaei, U. Galvanetto, Coupling of fem meshes with peri-
-# dynamic grids, Computer Methods in Applied Mechanics and Engineering 330 (2018) 471-497.
+#G. Fang, S. Liu, M. Fu, B. Wang, Z. Wu, J. Liang, A method to couple state-based peridynamics and
+#finite element method for crack propagation problem, Mechanics Research Communications 95 (2019)
+#89 -- 95.
 #@author patrickdiehl@lsu.edu
 #@date 02/09/2019
 import numpy as np
