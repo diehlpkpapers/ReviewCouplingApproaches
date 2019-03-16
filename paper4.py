@@ -10,17 +10,6 @@ from matplotlib import rc, cm
 rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 plt.rcParams.update({'font.size': 15})# Implementation of the examle problem for 
-# M. Zaccariotto, T. Mudric, D. Tomasi, A. Shojaei, U. Galvanetto, Coupling of fem meshes with peri-
-# dynamic grids, Computer Methods in Applied Mechanics and Engineering 330 (2018) 471-497.
-#@author patrickdiehl@lsu.edu
-#@date 02/09/2019
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib import rc, cm
-rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
-rc('text', usetex=True)
-plt.rcParams.update({'font.size': 15})
-
 
 #material properties
 K = 2
