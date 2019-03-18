@@ -11,13 +11,8 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 plt.rcParams.update({'font.size': 15})# Implementation of the examle problem for 
 
-#material properties
-K = 2
-E=1
-mu = (9*K*E)/(9*K-E)
-
-print K,E,mu
-
+#properties
+E = 1
 h = 0.1
 delta=2*h
 Area=1
@@ -25,12 +20,12 @@ V=V=h*Area
 
 F=1
 
-x = 0.5*(K-mu)
-y = 6.*mu/(np.pi*h*np.power(delta,4))
-z = 2./(np.pi*h*np.power(delta,3))
-
-print x,y,z
-
+# Use the one-dimensonal material properties from Chapter 4 of
+#Madenci, Erdogan, and Erkan Oterkus. Peridynamic theory and its 
+#applications. Vol. 17. New York: Springer, 2014.
+x = 0
+y = E/(2*Area*delta*delta*delta)
+z = 1./(2*delta*delta/Area)
 
 a = E*Area/h
 b = 4*delta*y*V*V/h
