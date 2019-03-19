@@ -145,11 +145,11 @@ x= np.arange(0,h*11,h)
 lenF = np.shape(MFem)[0]
 f = np.zeros(lenF)
 
-for i in range(0,4):
-    f[i] = -f1(x[i])
-    
-for i in range(5,lenF):
+for i in range(0,lenF):
     f[i] = f1(x[i])
+    
+#for i in range(5,lenF):
+#    f[i] = f1(x[i])
 
 f[0]=0
 
@@ -175,11 +175,11 @@ plotd(x,diffcoupled,difffem,diffpd,"paper1_f1_diff.pdf")
 lenF = np.shape(MFem)[0]
 f = np.zeros(lenF)
 
-for i in range(0,4):
-    f[i] = -f2(x[i])
-    
-for i in range(5,lenF):
+for i in range(0,lenF):
     f[i] = f2(x[i])
+    
+#for i in range(5,lenF):
+#    f[i] = f2(x[i])
 
 f[0]=0
 
@@ -206,11 +206,11 @@ plotd(x,diffcoupled,difffem,diffpd,"paper1_f2_diff.pdf")
 lenF = np.shape(MFem)[0]
 f = np.zeros(lenF)
 
-for i in range(0,4):
-    f[i] = -1*f3(x[i])
-    
-for i in range(5,lenF):
+for i in range(0,lenF):
     f[i] = f3(x[i])
+    
+#for i in range(5,lenF):
+#    f[i] = f3(x[i])
 
 f[0]=0
 
@@ -236,11 +236,11 @@ plotd(x,diffcoupled,difffem,diffpd,"paper1_f3_diff.pdf")
 lenF = np.shape(MFem)[0]
 f = np.zeros(lenF)
 
-for i in range(0,4):
-    f[i] = -1*f4(x[i])
-    
-for i in range(5,lenF):
+for i in range(0,lenF):
     f[i] = f4(x[i])
+    
+#for i in range(5,lenF):
+#    f[i] = f4(x[i])
 
 f[0]=0
 
