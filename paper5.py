@@ -12,24 +12,31 @@ rc('text', usetex=True)
 plt.rcParams.update({'font.size': 15})
 plt.rcParams.update({'figure.autolayout': True})
 
+##############################################################################
 #define properties
+##############################################################################
 E=200e9
 Area=1e-4
 F=1.0
 
+##############################################################################
 #define the material constant for the finte element discretization
+##############################################################################
 h=0.36
 a=E*Area/h
 
-
+##############################################################################
 #define the material constant for the peridyanmic discretization 
+##############################################################################
 hPD=0.36
 delta=2.*hPD
 V=hPD*Area
 c=(2.*E)/(Area*delta*delta)
 b=c/h*V*V
 
+##############################################################################
 # Pure finite element approach
+##############################################################################
 
 MFem = np.array(
  [ [a , -a , 0 , 0 , 0, 0 , 0 , 0 , 0 , 0 , 0  ],
@@ -115,4 +122,3 @@ plt.xlabel("Node position")
 plt.ylabel("Displacement")
 plt.legend()
 plt.savefig("paper5.pdf")
-

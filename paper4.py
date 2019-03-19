@@ -11,30 +11,33 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 plt.rcParams.update({'font.size': 15})# Implementation of the examle problem for 
 
+##############################################################################
 #properties
+##############################################################################
 E = 1
 h = 0.1
 delta=2*h
 Area=1
 V=V=h*Area
-
 F=1
 
+##############################################################################
 # Use the one-dimensonal material properties from Chapter 4 of
 #Madenci, Erdogan, and Erkan Oterkus. Peridynamic theory and its 
 #applications. Vol. 17. New York: Springer, 2014.
+##############################################################################
 x = 0
-y = E/(2*Area*delta*delta*delta)
-z = 1./(2*delta*delta/Area)
+y = E/(2.*Area*delta*delta*delta)
+z = 1./(2.*delta*delta/Area)
 
 a = E*Area/h
-b = 4*delta*y*V*V/h
-c = 2*delta*delta*z*z*x*V*V*V/h/h
-
-print a,b,c
+b = 4.*delta*y*V*V/h
+c = 2.*delta*delta*z*z*x*V*V*V/h/h
 
 
+##############################################################################
 #Define the neighborhoods
+##############################################################################
 m = np.array([
     [], #2
     [], #3
@@ -52,8 +55,9 @@ m = np.array([
     ]
     )
 
-
+##############################################################################
 #Assemble the stiffness matrix
+##############################################################################
 
 MCoupled = np.zeros([17,17])
 
@@ -100,7 +104,9 @@ for i in range(0,len(m)):
             MCoupled[idI][idJ] += -c
             MCoupled[idI][m[idJ-2][l]] += c
 
+##############################################################################
 #plot the stiffness matrix
+##############################################################################
 plt.imshow(MCoupled, cmap=cm.binary)
 plt.axis('off')
 plt.colorbar()
@@ -123,9 +129,9 @@ ucoupled = np.linalg.solve(MCoupled,f)
 # generate the position in the bar
 xCoupled= np.arange(0,h*17,h)
 
-
+##############################################################################
 # Prepare the stiffness matrix for the pure fem approach
-
+##############################################################################
 hFem = 0.16
 a = E*Area/hFem
 
