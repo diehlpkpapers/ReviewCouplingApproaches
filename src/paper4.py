@@ -9,7 +9,9 @@ import matplotlib.pyplot as plt
 from matplotlib import rc, cm
 rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
-plt.rcParams.update({'font.size': 15})# Implementation of the examle problem for 
+plt.rcParams.update({'font.size': 15})
+from cycler import cycler
+monochrome = (cycler('color', ['k']) * cycler('linestyle', ['-', '--', ':', '=.']))
 
 ##############################################################################
 #properties
@@ -162,11 +164,15 @@ ufem  = np.linalg.solve(MFem,f)
 xFem= np.arange(0,11*hFem,hFem)
 
 # plot the results
-plt.plot(xCoupled,ucoupled,label="Coupled",lw=2)
-plt.plot(xFem,ufem,label="FEM",lw=2)
+fig, ax = plt.subplots(1,1)
+ax.set_prop_cycle(monochrome)
+
+ax.plot(xCoupled,ucoupled,label="Coupled",lw=2)
+ax.plot(xFem,ufem,label="FEM",lw=2)
 #lt.plot(x,upd,label="PD",lw=2)
-plt.legend()
-plt.grid()
+ax.legend()
+ax.grid()
 plt.xlabel("Node position")
 plt.ylabel("Displacement")
+plt.tight_layout()
 plt.savefig("paper4.pdf")

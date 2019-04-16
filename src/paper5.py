@@ -11,6 +11,8 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 plt.rcParams.update({'font.size': 15})
 plt.rcParams.update({'figure.autolayout': True})
+from cycler import cycler
+monochrome = (cycler('color', ['k']) * cycler('linestyle', ['-', '--', ':', '=.']))
 
 ##############################################################################
 #define properties
@@ -113,10 +115,14 @@ with open('paper5.csv') as csv_file:
     for row in csv_reader:
        xCoupled.append(float(row[0]))
        uCoupled.append(float(row[1]))
-       
-plt.plot(xCoupled,uCoupled,label="Coupling approach",lw=2)
-plt.plot(xFEM,uFEM,label="FEM",lw=2)
-plt.plot(xPD,uPD,label="PD",lw=2)
+
+# plot
+fig, ax = plt.subplots(1,1)
+ax.set_prop_cycle(monochrome)
+
+ax.plot(xCoupled,uCoupled,label="Coupled",lw=2)
+ax.plot(xFEM,uFEM,label="FEM",lw=2)
+ax.plot(xPD,uPD,label="PD",lw=2)
 plt.grid()
 plt.xlabel("Node position")
 plt.ylabel("Displacement")

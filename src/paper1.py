@@ -9,6 +9,8 @@ from matplotlib import rc, cm
 rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 plt.rcParams.update({'font.size': 15})
+from cycler import cycler
+monochrome = (cycler('color', ['k']) * cycler('linestyle', ['-', '--', ':', '=.']))
 
 ##############################################################################
 #define properties
@@ -103,9 +105,12 @@ ufem  = np.linalg.solve(MFem,f)
 upd  = np.linalg.solve(MPeridynamics,f)
 
 # plot the results
-plt.plot(x,ucoupled,label="Coupled",lw=2)
-plt.plot(x,ufem,label="FEM",lw=2)
-plt.plot(x,upd,label="PD",lw=2)
+fig, ax = plt.subplots(1,1)
+ax.set_prop_cycle(monochrome)
+
+ax.plot(x,ucoupled,label="Coupled",lw=2)
+ax.plot(x,ufem,label="FEM",lw=2)
+ax.plot(x,upd,label="PD",lw=2)
 plt.legend()
 plt.grid()
 plt.xlabel("Node position")
@@ -116,15 +121,22 @@ plt.cla()
 
 plt.imshow(MCoupled, cmap=cm.binary)
 plt.axis('off')
-plt.colorbar()
 plt.savefig("paper1_matrix_coupled.pdf")
 
 plt.cla()
 
-plt.imshow(MFem, cmap=cm.binary)
-plt.savefig("paper1_matrix_fem.pdf")
+plt.imshow(MPeridynamics, cmap=cm.binary)
+plt.axis('off')
+plt.savefig("paper1_matrix_pd.pdf")
 
 plt.cla()
 
-plt.imshow(MPeridynamics, cmap=cm.binary)
-plt.savefig("paper1_matrix_pd.pdf")
+plt.imshow(MFem, cmap=cm.binary)
+plt.axis('off')
+plt.colorbar()
+
+plt.savefig("paper1_matrix_fem.pdf")
+
+
+
+
