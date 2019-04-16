@@ -9,6 +9,8 @@ from matplotlib import rc, cm
 rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 plt.rcParams.update({'font.size': 15})
+from cycler import cycler
+monochrome = (cycler('color', ['k']) * cycler('linestyle', ['-', '--', ':', '=.']))
 
 ##############################################################################
 #define non-linear loading functions
@@ -37,9 +39,11 @@ def solve(M,f):
     return np.linalg.solve(M,f)
 
 def plotu(x,ucoupled,ufem,upd,name,title):
-    plt.plot(x,ucoupled,label="Coupled",lw=2)
-    plt.plot(x,ufem,label="FEM",lw=2)
-    plt.plot(x,upd,label="PD",lw=2)
+    fig, ax = plt.subplots(1,1)
+    ax.set_prop_cycle(monochrome)
+    ax.plot(x,ucoupled,label="Coupled",lw=2)
+    ax.plot(x,ufem,label="FEM",lw=2)
+    ax.plot(x,upd,label="PD",lw=2)
     plt.legend()
     plt.grid()
     plt.title(title)
@@ -50,9 +54,11 @@ def plotu(x,ucoupled,ufem,upd,name,title):
     
     
 def plotd(x,diffcoupled,difffem,diffpd,name):
-    plt.plot(x[:-1],diffcoupled,label="Coupled",lw=2)
-    plt.plot(x[:-1],difffem,label="FEM",lw=2)
-    plt.plot(x[:-1],diffpd,label="PD",lw=2)
+    fig, ax = plt.subplots(1,1)
+    ax.set_prop_cycle(monochrome)
+    ax.plot(x[:-1],diffcoupled,label="Coupled",lw=2)
+    ax.plot(x[:-1],difffem,label="FEM",lw=2)
+    ax.plot(x[:-1],diffpd,label="PD",lw=2)
     plt.legend()
     plt.grid()
     plt.title("$u'(x)$")
