@@ -1,5 +1,5 @@
 all:
-	find -name "*.py" -exec python "{}" ";"
+	find ./src -name "*.py" -exec python "{}" ";"
 
 
 clean:
