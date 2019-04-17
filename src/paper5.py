@@ -6,7 +6,7 @@
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import rc
+from matplotlib import rc , cm
 rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 plt.rcParams.update({'font.size': 15})
@@ -128,3 +128,23 @@ plt.xlabel("Node position")
 plt.ylabel("Displacement")
 plt.legend()
 plt.savefig("paper5.pdf")
+
+
+mat = np.zeros([52,52])
+
+with open('paper5_stiffness.txt') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=' ')
+    i = 0
+    for row in csv_reader:
+        for j in range(0,len(row)):
+            mat[i][j] = float(row[j])
+        i = i + 1
+        print i
+        
+plt.cla()
+
+plt.imshow(mat, cmap=cm.binary)
+plt.axis('off')
+plt.colorbar()
+
+plt.savefig("paper5_matrix.pdf")
