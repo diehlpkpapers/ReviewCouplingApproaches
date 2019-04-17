@@ -7,6 +7,7 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import rc , cm
+import matplotlib.colors as colors
 rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 plt.rcParams.update({'font.size': 15})
@@ -137,14 +138,35 @@ with open('paper5_stiffness.txt') as csv_file:
     i = 0
     for row in csv_reader:
         for j in range(0,len(row)):
+            #if i == j:
             mat[i][j] = float(row[j])
         i = i + 1
-        print i
-        
-plt.cla()
 
-plt.imshow(mat, cmap=cm.binary)
+plt.clf()
+
+dig = np.zeros([52,52])
+dig[dig == 0.0] = np.nan
+
+for i in range(0,len(mat)):
+    dig[i][i] = np.sum(np.abs(mat[i]))
+
+plt.imshow(dig, cmap=cm.binary)
 plt.axis('off')
 plt.colorbar()
 
+plt.savefig("paper5_diagonal.pdf")
+
+
+plt.clf()
+
+
+mat[mat == 0.0] = np.nan
+
+plt.imshow(mat,cmap=cm.binary)
+plt.axis('off')
+plt.colorbar()
 plt.savefig("paper5_matrix.pdf")
+
+
+    
+
