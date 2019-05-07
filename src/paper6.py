@@ -44,3 +44,32 @@ plt.xlabel("Node position")
 plt.ylabel("Displacement")
 plt.tight_layout()
 plt.savefig("paper6_coarse.pdf")
+
+pos = []
+fem = []
+bpd = []
+spd = []
+
+with open('paper6_fine.csv') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
+    for row in csv_reader:
+       pos.append(float(row[0]))
+       fem.append(float(row[1]))
+       bpd.append(float(row[2]))
+       spd.append(float(row[3]))
+
+plt.cla()
+       
+# plot the results
+fig, ax = plt.subplots(1,1)
+ax.set_prop_cycle(monochrome)
+
+ax.plot(pos,fem,label="FEM",lw=2)
+ax.plot(pos,bpd,label="Coupled BB",lw=2)
+ax.plot(pos,spd,label="Coupled SB",lw=2)
+ax.legend()
+ax.grid()
+plt.xlabel("Node position")
+plt.ylabel("Displacement")
+plt.tight_layout()
+plt.savefig("paper6_fine.pdf")
