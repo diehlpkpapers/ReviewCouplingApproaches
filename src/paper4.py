@@ -30,7 +30,7 @@ F=1
 ##############################################################################
 x = 0
 y = E/(2.*Area*delta*delta*delta)
-z = 1./(2.*delta*delta/Area)
+z = 1./(2.*delta*delta*Area)
 
 a = E*Area/h
 b = 4.*delta*y*V*V/h
