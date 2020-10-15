@@ -15,6 +15,7 @@ make
 * paper4.py [2]
 * paper5.py [3]
 * paper6.py [4]
+* paper7.py [5]
 
 ### References
 
@@ -23,3 +24,5 @@ make
 3. W. Sun, J. Fish, Superposition-based coupling of peridynamics and finite element method, Computational Mechanics (2019) 1–18
 4. T. Ni, M. Zaccariotto, Q.Z. Zhu, U. Galvanetto, Coupling of fem and ordinary state-based peridynamics for brittle failure analysis in 3d, Mechanics of Advanced Materials and Structures
 0(0), 1 (2019). DOI  10.1080/15376494.2019.16022
+5. Kilic, B., and Madenci, E., 2010, “Coupling of Peridynamic Theory and Finite Element Method,” J. of Mechanics of Materials and Structures, Vol. 5, pp. 707–733.
+
