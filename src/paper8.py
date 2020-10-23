@@ -2,7 +2,7 @@
 # E. Madenci, A. Barut, M. Dorduncu, N.D. Phan, in 2018AIAA/ASCE/AHS/ASC Structures, 
 # Structural Dynamics, and Materials Conference (2018)
 #@author patrickdiehl@lsu.edu
-#@date 10/14/2020
+#@date 10/24/2020
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
