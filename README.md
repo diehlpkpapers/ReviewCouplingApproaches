@@ -16,6 +16,7 @@ make
 * paper5.py [3]
 * paper6.py [4]
 * paper7.py [5]
+* paper8.py [6]
 
 ### References
 
@@ -25,4 +26,4 @@ make
 4. T. Ni, M. Zaccariotto, Q.Z. Zhu, U. Galvanetto, Coupling of fem and ordinary state-based peridynamics for brittle failure analysis in 3d, Mechanics of Advanced Materials and Structures
 0(0), 1 (2019). DOI  10.1080/15376494.2019.16022
 5. Kilic, B., and Madenci, E., 2010, “Coupling of Peridynamic Theory and Finite Element Method,” J. of Mechanics of Materials and Structures, Vol. 5, pp. 707–733.
-
+6. E. Madenci, A. Barut, M. Dorduncu, N.D. Phan, in 2018AIAA/ASCE/AHS/ASC Structures, Structural Dynamics, and Materials Conference (2018)
